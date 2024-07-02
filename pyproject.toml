@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "training-time-domain-authorization"
+version = "0.1.0"
+description = ""
+authors = ["Domenic Rosati <domenicrosati@gmail.com>"]
+readme = "README.md"
+packages = [{include = "training_time_domain_authorization"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
