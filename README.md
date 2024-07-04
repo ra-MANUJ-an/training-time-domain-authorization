@@ -1,6 +1,8 @@
 # A Benchmark for Training-time Domain Authorization
 
-**Project Goal:** A Public Reusable and Replicable Toolkit for Rigerously Evaluating Training-time domain authorization solutions
+**Project Goal:** A Public Reusable and Replicable Toolkit for Rigerously Evaluating Training-time domain authorization solutions.
+
+After evaluating a defence on this benchmark, an evaluator should be able to say: This defence provide training time domain authorization with a high-bar of empirical evidence.
 
 **Inspiration:** BIER, GEM, DecodingTrust, HarmBench
 
