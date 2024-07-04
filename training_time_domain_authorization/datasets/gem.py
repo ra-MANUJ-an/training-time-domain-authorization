@@ -1,13 +1,10 @@
 from typing import Literal
 
-from datasets import load_dataset
-from torch.utils.data.dataloader import DataLoader
-
 import gem_metrics
-
-from tqdm import tqdm
-
+from datasets import load_dataset
 from loguru import logger
+from torch.utils.data.dataloader import DataLoader
+from tqdm import tqdm
 
 from training_time_domain_authorization.arguments import ARGS
 from training_time_domain_authorization.datasets.datasets import BenchmarkDataset
@@ -64,7 +61,7 @@ def construct_gem_dataset(
             if isinstance(inp, list):
                 inp = " ".join(inp)
             outputs.append(
-                f"{dataset_structure[dataset]['input_prompt_label']} {inp}\n{dataset_structure[dataset]['target_prompt_label']}"
+                f"{dataset_structure[dataset]['input_prompt_label']} {inp}\n{dataset_structure[dataset]['target_prompt_label']}"  # noqa: E501
             )
             references.append(target)
         tokenized = tokenizer(
@@ -84,7 +81,7 @@ def construct_gem_dataset(
             if isinstance(inp, list):
                 inp = " ".join(inp)
             outputs.append(
-                f"{dataset_structure[dataset]['input_prompt_label']} {inp}\n{dataset_structure[dataset]['target_prompt_label']} {target}"
+                f"{dataset_structure[dataset]['input_prompt_label']} {inp}\n{dataset_structure[dataset]['target_prompt_label']} {target}"  # noqa: E501
             )
         tokenized = tokenizer(
             outputs,
