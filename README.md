@@ -14,6 +14,7 @@ $ poetry install
 - `results` contains the results of the experiments
 - `models` contains the trained models
 - `experiments` contains the scripts to run the experiments
+- `training_time_domain_authorization/datasets` - contains data loaders and evaluations for each dataset
 
 Experiment scripts are located in the `experiments` directory. The scripts are named according to the experiment they run. The scripts are written in bash and are used to run the experiments. The scripts are used to run the experiments and save the results in the `results` directory. 
 
