@@ -1,14 +1,14 @@
-import os
 import json
+import os
 import random
+
 import numpy as np
 import torch
+from loguru import logger
 from transformers import AutoTokenizer
 
-from loguru import logger
-
 from training_time_domain_authorization.arguments import ARGS
-from training_time_domain_authorization.datasets.datasets import construct_dataset
+from training_time_domain_authorization.datasets import construct_dataset
 from training_time_domain_authorization.training import train_model
 
 args = ARGS
@@ -22,15 +22,13 @@ if __name__ == "__main__":
     random.seed(args.seed)
 
     model_name = args.model
-    if args.local_model:
-        model_name = f"./models/{args.local_model}"
 
     # check if ./results/{args.experiment_name}.json already exists if so exit
     if os.path.exists(f"./results/{args.experiment_name}.json"):
         logger.info(f"Experiment {args.experiment_name} already exists, exiting")
         exit()
 
-    tokenizer = AutoTokenizer.from_pretrained(args.tokenizer)
+    tokenizer = AutoTokenizer.from_pretrained(args.tokenizer, padding_side="left")
     tokenizer.pad_token = tokenizer.eos_token
     dataset = construct_dataset(
         args.dataset,

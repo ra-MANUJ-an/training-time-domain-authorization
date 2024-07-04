@@ -8,6 +8,9 @@ parser.add_argument(
 parser.add_argument("--dataset", type=str, default="viggo", help="dataset to use")
 parser.add_argument("--model", type=str, default="distilgpt2", help="model to use")
 parser.add_argument(
+    "--tokenizer", type=str, default="distilgpt2", help="tokenizer to use"
+)
+parser.add_argument(
     "--save-results", type=bool, default=True, help="save results to file"
 )
 parser.add_argument("--debug", type=bool, default=False, help="log debug messages")

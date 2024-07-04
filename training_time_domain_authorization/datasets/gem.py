@@ -1,11 +1,11 @@
 from typing import Literal
 
 import gem_metrics
-from datasets import load_dataset
 from loguru import logger
 from torch.utils.data.dataloader import DataLoader
 from tqdm import tqdm
 
+from datasets import load_dataset
 from training_time_domain_authorization.arguments import ARGS
 from training_time_domain_authorization.datasets.datasets import BenchmarkDataset
 
@@ -19,8 +19,8 @@ def construct_gem_dataset(
     test_batch_size: int = DEFAULT_BATCH_SIZE,
     train_batch_size: int = DEFAULT_BATCH_SIZE,
 ):
-    train_ds = load_dataset("GEM/" + dataset, split="train")
-    test_ds = load_dataset("GEM/" + dataset, split="test")
+    train_ds = load_dataset("GEM/" + dataset, split="train", trust_remote_code=True)
+    test_ds = load_dataset("GEM/" + dataset, split="test", trust_remote_code=True)
 
     dataset_structure = {
         "viggo": {
@@ -28,18 +28,6 @@ def construct_gem_dataset(
             "target_prompt_label": "Description:",
             "input_ds_label": "meaning_representation",
             "input_prompt_label": "Meaning Representation:",
-        },
-        "xsum": {
-            "target_ds_label": "target",
-            "target_prompt_label": "Summary:",
-            "input_ds_label": "document",
-            "input_prompt_label": "Document:",
-        },
-        "cochrane-simplification": {
-            "target_ds_label": "target",
-            "target_prompt_label": "Simplified:",
-            "input_ds_label": "source",
-            "input_prompt_label": "Abstract:",
         },
         "common_gen": {
             "target_ds_label": "target",
@@ -123,13 +111,9 @@ def construct_gem_dataset(
     return train_dataloader, test_dataloader
 
 
-def evaluate_gem_dataset(
-    model, eval_dataloader, tokenizer, dataset_name, use_sampler=False
-):
+def evaluate_gem_dataset(model, eval_dataloader, tokenizer, use_sampler=False):
     results = []
     max_new_tokens = 25
-    if dataset_name in ["xsum", "cochrane-simplification"]:
-        max_new_tokens = 256
     for batch in tqdm(eval_dataloader):
         params = {
             "max_new_tokens": max_new_tokens,
@@ -193,22 +177,37 @@ class GEMDataset(BenchmarkDataset):
         train_batch_size=DEFAULT_BATCH_SIZE,
     ):
         self.tokenizer = tokenizer
-        self.train_dataloader, self.test_dataloader = construct_gem_dataset(
+        self._train_dataloader, self._test_dataloader = construct_gem_dataset(
             dataset_name, tokenizer, test_batch_size, train_batch_size
         )
         self._name = dataset_name
 
     @property
     def train_dataloader(self):
-        return self.train_dataloader
+        return self._train_dataloader
+
+    # setter for train_dataloader
+    @train_dataloader.setter
+    def train_dataloader(self, value):
+        self._train_dataloader = value
 
     @property
     def test_dataloader(self):
-        return self.test_dataloader
+        return self._test_dataloader
+
+    # setter for test_dataloader
+    @test_dataloader.setter
+    def test_dataloader(self, value):
+        self._test_dataloader = value
 
     @property
     def name(self):
         return self._name
+
+    # setter for name
+    @name.setter
+    def name(self, value):
+        self._name = value
 
     def evaluate(self, model, dataset_split: Literal["train", "test"] = "test"):
         if dataset_split == "train":

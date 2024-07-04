@@ -1,7 +1,8 @@
-poetry run python main.py --experiment_name viggo_baseline \
-    --model_name distilgpt2 \
-    --train_batch_size 32 \
-    --test_batch_size 32 \
-    --learning_rate 1e-5 \
-    --num_train_epochs 3 \
+poetry run python main.py --experiment-name viggo_baseline \
+    --model distilgpt2 \
+    --tokenizer distilgpt2 \
+    --train-batch-size 4 \
+    --test-batch-size 4 \
+    --learning-rate 1e-5 \
+    --num-epochs 3 \
     --seed 42

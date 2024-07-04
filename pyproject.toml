@@ -8,7 +8,12 @@ packages = [{include = "training_time_domain_authorization"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-
+torch = "2.2.2"
+transformers = "^4.42.3"
+datasets = "^2.20.0"
+loguru = "^0.7.2"
+gem-metrics = {git = "https://github.com/GEM-benchmark/GEM-metrics.git"}
+accelerate = "^0.32.1"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.5.0"
