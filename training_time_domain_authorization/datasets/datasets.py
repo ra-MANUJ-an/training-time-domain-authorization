@@ -248,6 +248,7 @@ class BenchmarkDataset():
         if dataset_split == "train":
             return evaluate_benchmark_dataset(model, self.train_dataloader, self.tokenizer)
         return evaluate_benchmark_dataset(model, self.test_dataloader, self.tokenizer)
+
 # from abc import ABC, abstractmethod
 # from typing import Literal
 
